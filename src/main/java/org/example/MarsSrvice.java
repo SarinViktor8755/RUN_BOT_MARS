@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Locale;
+
 import static org.example.Main.Distance_Earth_Mars;
 
 public class MarsSrvice {
@@ -9,7 +11,7 @@ public class MarsSrvice {
 
         float res = (km / Distance_Earth_Mars) * 100;
         if (res <= 100)
-            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + km + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + (Distance_Earth_Mars - km) + " km \n" + create_track_bar(25);
+            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((Distance_Earth_Mars - km))) + " km \n" + create_track_bar(25);
         else return "FINESH";
     }
 

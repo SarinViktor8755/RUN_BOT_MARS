@@ -17,8 +17,8 @@ public class Main {
     static String BOT_TOKKEN_test = "7039553340:AAHCuowlWMQltfoQNwXOg6MUQ3srtm95N0o";
     static String BOT_TOKKEN = "6552221670:AAFpvfvUmNAEfkhkDUS5nt8HCl3N8906soc";
 
-    static public long km = 0; // пройденддая дистанция
-    static public final float Distance_Earth_Mars = 54_600; // цель дистанция
+    static public long km = 0; // ??????????? ?????????
+    static public final float Distance_Earth_Mars = 54_600; // ???? ?????????
 
 
     static public ArrayList<String> Admins_nik = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Start_BOT_RUN");
         add_admins();
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
@@ -43,18 +43,20 @@ public class Main {
 
                         int m_id = mes.editedMessage().messageId();
                         String new_text = mes.editedMessage().text();
-                        if (!PasrserString.fineKM(new_text)) break;
+
+                        // System.out.println("editedMessage!!!11  0");
                         if(mes.editedMessage().caption()!= null) new_text = mes.editedMessage().caption();
                       //  System.out.println(mes);
-                        //   System.out.println("editedMessage!!!11  " + m_id + "  " + new_text );
+                        if (!PasrserString.fineKM(new_text)) break;
+                        //   System.out.println("editedMessage!!!11  ");
 
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
-                      //     System.out.println("editedMessage!!!222");
+                     //      System.out.println("editedMessage!!!222");
                         Main.km += km_delta;
                         //History.print_history();
-                      //     System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
+                           System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
                         // bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ISPRAV"));
-                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ИСПРАВЛЕНО::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
+                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
                         History.print_history();
                         break;
                         // System.out.println("---");
@@ -74,7 +76,7 @@ public class Main {
 
 
                     if (PasrserString.distanc_reader(text_mes, user)) {
-                        bot.execute(new SendMessage(chatId, user.username() + " #исправил дистанцию " + td + " км на " + Main.km + " км"));
+                        bot.execute(new SendMessage(chatId, user.username() + " Исправил значение " + td + " на " + Main.km + " "));
                     }
 
 
@@ -110,9 +112,10 @@ public class Main {
 
     }
 
+    ///// ОСНОВНОЙ отправка собщения
     static public void ask_km(String text_mes, TelegramBot bot, long chatId, User user, Integer mes_id) {
         int user_run = (int) parsKmString(text_mes);
-        if (user_run <= 1) return;
+        if (user_run <= 0) return;
         km += Long.valueOf(user_run);
         bot.execute(new SendMessage(chatId, MarsSrvice.calculate_percentage(km, user_run)).replyToMessageId(mes_id));
         Users.add_km_for_user(user_run, user);

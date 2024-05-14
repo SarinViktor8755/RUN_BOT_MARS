@@ -12,7 +12,7 @@ public class Users {
         if (id == -1) users.add(new UserExte(user.id(),user));
         id = fine_user(user.id());
         users.get(id).add_km(km);
-        System.out.println(users);
+    //    System.out.println(users);
     }
 
     static private int fine_user(Long id_user) {
