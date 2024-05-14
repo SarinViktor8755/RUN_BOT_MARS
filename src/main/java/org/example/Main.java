@@ -54,7 +54,7 @@ public class Main {
                      //      System.out.println("editedMessage!!!222");
                         Main.km += km_delta;
                         //History.print_history();
-                           System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
+                     //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
                         // bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ISPRAV"));
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
                         History.print_history();
