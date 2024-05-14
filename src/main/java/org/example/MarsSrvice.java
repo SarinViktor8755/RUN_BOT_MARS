@@ -11,8 +11,8 @@ public class MarsSrvice {
 
         float res = (km / Distance_Earth_Mars) * 100;
         if (res <= 100)
-            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((Distance_Earth_Mars - km))) + " km \n" + create_track_bar(25);
-        else return "FINESH";
+            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((Distance_Earth_Mars - km))) + " km \n" + create_track_bar(21);
+        else return "Финиш!!!";
     }
 
 
