@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Start_BOT_RUN");
         add_admins();
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
@@ -52,6 +52,7 @@ public class Main {
 
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
                      //      System.out.println("editedMessage!!!222");
+                        if(km_delta==0) break;
                         Main.km += km_delta;
                         //History.print_history();
                      //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
@@ -71,7 +72,7 @@ public class Main {
                     if (mes.message().caption() != null) text_mes = mes.message().caption();
                     else text_mes = mes.message().text();
 
-                    System.out.println("text_mes   " + text_mes);
+                    //     System.out.println("text_mes   " + text_mes);
                     //   bot.execute(new SendMessage(chatId,"---").replyToMessageId(mes.message().messageId()));
 
 
@@ -81,13 +82,7 @@ public class Main {
 
 
                     if (PasrserString.fineKM(text_mes)) {
-//                        int user_run = (int) PasrserString.parsKmString(text_mes);
-//                        if (user_run <= 1) break;
-//                        km += Long.valueOf(user_run);
-//                        bot.execute(new SendMessage(chatId, MarsSrvice.calculate_percentage(km, user_run)));
-//                        Users.add_km_for_user(user_run, user);
                         ask_km(text_mes, bot, chatId, user, mes.message().messageId());
-
                     }
 
 
