@@ -36,7 +36,7 @@ public class Main {
         History.startTime();
         add_admins();
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
@@ -181,7 +181,7 @@ public class Main {
             String text = mes.message().text();
             //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
 
-            
+
 //            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
 //            bot.execute(deleteMessage);
             if (block_lskala == 2) {
@@ -202,7 +202,6 @@ public class Main {
 
     static public void check_block(Update mes,TelegramBot bot) {
         if (mes.message().from().id() != 299695014) return;
-
         String text = mes.message().text();
         if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
         if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
