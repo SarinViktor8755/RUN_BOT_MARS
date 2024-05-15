@@ -12,6 +12,9 @@ import com.pengrad.telegrambot.request.SendMessage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static org.example.History.getSumKM;
+
+import static org.example.History.get_ve_to_marsa;
 import static org.example.PasrserString.parsKmString;
 
 
@@ -30,15 +33,22 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Start_BOT_RUN");
+        History.startTime();
         add_admins();
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
             for (int i = 0; i < updates.size(); i++) {
                 try {
-
+                    //History.startTimegetDelta();
+                 //   System.out.println(getSumKM());
+                    double h = History.startDeltaTime() / (double)Constants.HOUR;
+                   // System.out.println("HOUR  " + h);
+                  //  System.out.println("speed : "+History.getSpeed());
+                   // System.out.println("prog" + get_ve_to_marsa());
+                  //  get_arrival_forecast();
                     mes = updates.get(i);
 
 
@@ -48,7 +58,7 @@ public class Main {
 
                        //  System.out.println("editedMessage!!!11  0");
                         if (mes.editedMessage().caption() != null) new_text = mes.editedMessage().caption();
-                          System.out.println(mes);
+                      //    System.out.println(mes);
                         if (!PasrserString.fineKM(new_text)) break;
                        //    System.out.println("editedMessage!!!11  ");
 
@@ -60,7 +70,7 @@ public class Main {
                         //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
                         // bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ISPRAV"));
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
-                        History.print_history();
+
                         break;
                         // System.out.println("---");
 
@@ -92,12 +102,12 @@ public class Main {
                         if (!isPhoto) {
                             give_my_photo(chatId, bot, mes.message().messageId());
                         } else {
-                            System.out.println("11111");
+                           // System.out.println("11111");
                             ask_km(text_mes, bot, chatId, user, mes.message().messageId());
                         }
                     }
 
-                       check_block(mes);
+                       check_block(mes,bot);
                    //   System.out.println(mes);
                        lediskala_Del(bot, mes);
                 } catch (NullPointerException | NumberFormatException e) {
@@ -127,6 +137,10 @@ public class Main {
         if (user_run <= 0) return;
         km += Long.valueOf(user_run);
         bot.execute(new SendMessage(chatId, MarsSrvice.calculate_percentage(km, user_run)).replyToMessageId(mes_id));
+//        bot.execute(new SendMessage(chatId,"\nНаша средняя скорость : "+History.getSpeed() + " км/ч "));
+//
+//        bot.execute(new SendMessage(chatId,"\n На Марсе будем : "+ History.get_ve_to_marsa()));
+
         Users.add_km_for_user(user_run, user);
 
         History.history_add.put(mes_id, user_run);
@@ -175,7 +189,7 @@ public class Main {
                 if (kol < 1) kol = 2;
                 for (int i = 0; i < kol; i++) {
                     if (randomBoolean(.5f)) sb.append("Бла ");
-                    else sb.append("бла ");
+                    else sb.append("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
                 }
 
                 bot.execute(new SendMessage(chatId, sb.toString()));
@@ -184,14 +198,24 @@ public class Main {
     }
 
 
-    static public void check_block(Update mes) {
+    static public void check_block(Update mes,TelegramBot bot) {
         if (mes.message().from().id() != 299695014) return;
 
 
         String text = mes.message().text();
-        if (text.equals("/ls0")) block_lskala = 0;
-        if (text.equals("/ls1")) block_lskala = 1;
-        if (text.equals("/ls2")) block_lskala = 2;
+        if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
+        if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
+        if (text.equals("/ls2")) {block_lskala = 2;delMess(mes,bot);}
+
+
+
+    }
+
+    static private void delMess(Update mes,TelegramBot bot){
+        String chatId = String.valueOf(mes.message().chat().id());
+        Integer messageId = mes.message().messageId();
+        DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
+        bot.execute(deleteMessage);
 
     }
 

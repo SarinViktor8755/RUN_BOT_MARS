@@ -3,6 +3,7 @@ package org.example;
 import java.util.Locale;
 
 import static org.example.Main.Distance_Earth_Mars;
+import static org.example.Main.km;
 
 public class MarsSrvice {
 
@@ -11,13 +12,19 @@ public class MarsSrvice {
 
         float res = (km / Distance_Earth_Mars) * 100;
         if (res <= 100)
-            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((Distance_Earth_Mars - km))) + " km \n" + create_track_bar(21);
+            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((get_l_to_target()))) + " km \n"
+                    + create_track_bar(21) + "\nНаша средняя скорость : "+(int)(History.getSpeed()) + " км/ч " +
+                    "\nНа Марсе будем : "+ History.get_ve_to_marsa()
+                    ;
         else return "Финиш!!!\nПробежали " + String.format(Locale.US, "%,d", km)+ "  https://www.asn-news.ru/uploads/news/photo/big/scalhobr2.jpeg";
     }
 
+    static public float get_l_to_target(){
+        return Distance_Earth_Mars - km;
+    }
 
     static String create_track_bar(int length_bar) {
-        int point = (int)map(0, Distance_Earth_Mars,0,length_bar,Main.km);
+        int point = (int)map(0, Distance_Earth_Mars,0,length_bar, km);
         StringBuilder sb = new StringBuilder();
         sb.append("З|");
         for (int i = 0; i < length_bar; i++) {
