@@ -40,21 +40,14 @@ public class History { //история суммирования км
     }
 
     static public String get_ve_to_marsa() {
-        //раст / скорость
+        //      раст / скорость
         if (getSpeed() == 0.0) return "нет данных";
         double v = get_l_to_target() / getSpeed();
         long ost_v_ch = (long) (v * Constants.HOUR);
         ost_v_ch = ((long) (v * Constants.HOUR)) + System.currentTimeMillis();
-
-
-        Date data = new Date(ost_v_ch);
-
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        String date_f = simpleDateFormat.format(new Date());
-
-
+        String date_f = simpleDateFormat.format(new Date(ost_v_ch));
 
         return date_f;
     }

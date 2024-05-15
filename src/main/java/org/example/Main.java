@@ -180,8 +180,10 @@ public class Main {
             Integer messageId = mes.message().messageId();
             String text = mes.message().text();
             //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
-            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
-            bot.execute(deleteMessage);
+
+            
+//            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
+//            bot.execute(deleteMessage);
             if (block_lskala == 2) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
@@ -201,14 +203,10 @@ public class Main {
     static public void check_block(Update mes,TelegramBot bot) {
         if (mes.message().from().id() != 299695014) return;
 
-
         String text = mes.message().text();
         if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
         if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
         if (text.equals("/ls2")) {block_lskala = 2;delMess(mes,bot);}
-
-
-
     }
 
     static private void delMess(Update mes,TelegramBot bot){
