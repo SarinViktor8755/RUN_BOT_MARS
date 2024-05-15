@@ -6,9 +6,11 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.model.request.ForceReply;
+import com.pengrad.telegrambot.request.DeleteMessage;
 import com.pengrad.telegrambot.request.SendMessage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.example.PasrserString.parsKmString;
 
@@ -16,6 +18,8 @@ import static org.example.PasrserString.parsKmString;
 public class Main {
     static String BOT_TOKKEN_test = "7039553340:AAHCuowlWMQltfoQNwXOg6MUQ3srtm95N0o";
     static String BOT_TOKKEN = "6552221670:AAFpvfvUmNAEfkhkDUS5nt8HCl3N8906soc";
+
+    static public int block_lskala = 0;
 
     static public long km = 0; // ??????????? ?????????
     static public final float Distance_Earth_Mars = 54_600; // ???? ?????????
@@ -28,15 +32,21 @@ public class Main {
         System.out.println("Start_BOT_RUN");
         add_admins();
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
             for (int i = 0; i < updates.size(); i++) {
                 try {
 
+
                     mes = updates.get(i);
-                 //   System.out.println(mes);
+
+                    check_block(mes);
+                    lediskala_Del(bot, mes);
+
+
+                    System.out.println(mes);
 //                    System.out.println("+++" + mes.message().caption());
 //                    System.out.println("----" + mes.message().text());
                     if (mes.editedMessage() != null) {
@@ -45,17 +55,17 @@ public class Main {
                         String new_text = mes.editedMessage().text();
 
                         // System.out.println("editedMessage!!!11  0");
-                        if(mes.editedMessage().caption()!= null) new_text = mes.editedMessage().caption();
-                      //  System.out.println(mes);
+                        if (mes.editedMessage().caption() != null) new_text = mes.editedMessage().caption();
+                        //  System.out.println(mes);
                         if (!PasrserString.fineKM(new_text)) break;
                         //   System.out.println("editedMessage!!!11  ");
 
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
-                     //      System.out.println("editedMessage!!!222");
-                        if(km_delta==0) break;
+                        //      System.out.println("editedMessage!!!222");
+                        if (km_delta == 0) break;
                         Main.km += km_delta;
                         //History.print_history();
-                     //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
+                        //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
                         // bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ISPRAV"));
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
                         History.print_history();
@@ -130,6 +140,58 @@ public class Main {
 
     }
 
+    static public void lediskala_Del(TelegramBot bot, Update mes) {
+        int id_ls = 2008008852;
+        if(block_lskala == 0) return;
+     //   System.out.println("qweqe");
+        if (mes.message().from().id() == id_ls) {
+            String chatId = String.valueOf(mes.message().chat().id());
+            Integer messageId = mes.message().messageId();
+            String text = mes.message().text();
+            //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
+            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
+            bot.execute(deleteMessage);
+            if ( block_lskala == 2) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
+                int kol = text.length() / 3;
+                if (kol < 1) kol = 2;
+                for (int i = 0; i < kol; i++) {
+                    if(randomBoolean(.5f))sb.append("Бла "); else sb.append("бла ");
+                }
+
+                bot.execute(new SendMessage(chatId, sb.toString()));
+            }
+        }
+    }
+
+
+    static public void check_block(Update mes){
+        if (mes.message().from().id() != 299695014)return;
+        String text = mes.message().text();
+        if(text.equals("/ls0")) block_lskala = 0;
+        if(text.equals("/ls1")) block_lskala = 1;
+        if(text.equals("/ls2")) block_lskala = 2;
+
+    }
+
+    static public void delate_mess(TelegramBot bot, Update mes) {
+        // mes.deletedBusinessMessages();
+        String chatId = String.valueOf(mes.message().chat().id());
+        Integer messageId = mes.message().messageId();
+        DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
+        bot.execute(deleteMessage);
+    }
+
+    static public void make_changes(TelegramBot bot, Update mes) {
+        //  mes.deletedBusinessMessages();
+        String chatIdd = String.valueOf(mes.message().chat().id());
+        Integer messageId = mes.message().messageId();
+        DeleteMessage deleteMessage = new DeleteMessage(chatIdd, messageId);
+        bot.execute(deleteMessage);
+    }
+
+
     static public boolean check_photo(Update mes) {
         if (mes.message().photo() == null) return false;
         else return true;
@@ -143,5 +205,15 @@ public class Main {
         Admins_nik.add("Anton_Kipchoge");
 
     }
+
+    static public boolean randomBoolean(float chance) {
+        return random() < chance;
+    }
+
+    static public float random() {
+        Random random = new Random();
+        return random.nextFloat();
+    }
+
 
 }
