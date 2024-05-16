@@ -32,14 +32,21 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Start_BOT_RUN");
-        History.startTime();
+
         add_admins();
         try {
             Save_to_disk_history.read_to_disk_history();
         } catch (IOException e) {
+
+            History.startTime();
+            History.starTimePoint = System.currentTimeMillis();
+            System.out.println("START DATA_TIME");
+            Save_to_disk_history.save_to_disk_points();
             throw new RuntimeException(e);
         }
         start_distanc(args);
+
+        System.out.println("Distension : "+Main.km);
         TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
@@ -85,7 +92,7 @@ public class Main {
 
                     if (PasrserString.distanc_reader(text_mes, user)) {
                         bot.execute(new SendMessage(chatId, user.username() + " Исправил значение " + td + " на " + Main.km + " "));
-
+                        Save_to_disk_history.save_to_disk_points();
                     }
 
 
@@ -145,8 +152,9 @@ public class Main {
         //System.out.println(args[0]);
         try {
             km = Long.parseLong(args[0]);
+            Save_to_disk_history.save_to_disk_points();
         } catch (ArrayIndexOutOfBoundsException e) {
-            km = 0;
+            //km = 0;
         }
 
     }

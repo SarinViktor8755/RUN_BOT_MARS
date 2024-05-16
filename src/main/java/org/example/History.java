@@ -14,7 +14,7 @@ import static org.example.MarsSrvice.get_l_to_target;
 public class History { //история суммирования км
     static public HashMap<Integer, Integer> history_add = new HashMap<>();
 
-    static public Long starTimePoint = System.currentTimeMillis();
+    static public Long starTimePoint;
 
     static public void startTime() {
 
