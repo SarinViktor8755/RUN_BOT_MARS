@@ -5,16 +5,15 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
-import com.pengrad.telegrambot.model.request.ForceReply;
 import com.pengrad.telegrambot.request.DeleteMessage;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.example.save_to_disk.Save_to_disk_history;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.example.History.getSumKM;
 
-import static org.example.History.get_ve_to_marsa;
 import static org.example.PasrserString.parsKmString;
 
 
@@ -35,42 +34,36 @@ public class Main {
         System.out.println("Start_BOT_RUN");
         History.startTime();
         add_admins();
+        try {
+            Save_to_disk_history.read_to_disk_history();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         start_distanc(args);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
             for (int i = 0; i < updates.size(); i++) {
                 try {
-                    //History.startTimegetDelta();
-                 //   System.out.println(getSumKM());
-                    double h = History.startDeltaTime() / (double)Constants.HOUR;
-                   // System.out.println("HOUR  " + h);
-                  //  System.out.println("speed : "+History.getSpeed());
-                   // System.out.println("prog" + get_ve_to_marsa());
-                  //  get_arrival_forecast();
-                    mes = updates.get(i);
 
+                    mes = updates.get(i);
 
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
                         String new_text = mes.editedMessage().caption();
 
-                       //  System.out.println("editedMessage!!!11  0");
                         if (mes.editedMessage().caption() != null) new_text = mes.editedMessage().caption();
-                      //    System.out.println(mes);
+
                         if (!PasrserString.fineKM(new_text)) break;
-                       //    System.out.println("editedMessage!!!11  ");
 
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
-                        //      System.out.println("editedMessage!!!222");
+
                         if (km_delta == 0) break;
                         Main.km += km_delta;
-                        //History.print_history();
-                        //      System.out.println("editedMessage!!!333 :: " + mes.editedMessage().chat().id());
-                        // bot.execute(new SendMessage(mes.editedMessage().chat().id(), "ISPRAV"));
-                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
 
+                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
+                        Save_to_disk_history.save_to_disk_points();
                         break;
                         // System.out.println("---");
 
@@ -88,12 +81,11 @@ public class Main {
                         isPhoto = true;
                     } else text_mes = mes.message().text();
 
-                    //     System.out.println("text_mes   " + text_mes);
-                    //   bot.execute(new SendMessage(chatId,"---").replyToMessageId(mes.message().messageId()));
 
 
                     if (PasrserString.distanc_reader(text_mes, user)) {
                         bot.execute(new SendMessage(chatId, user.username() + " Исправил значение " + td + " на " + Main.km + " "));
+
                     }
 
 
@@ -102,7 +94,7 @@ public class Main {
                         if (!isPhoto) {
                             give_my_photo(chatId, bot, mes.message().messageId());
                         } else {
-                           // System.out.println("11111");
+
                             ask_km(text_mes, bot, chatId, user, mes.message().messageId());
                         }
                     }
@@ -137,14 +129,10 @@ public class Main {
         if (user_run <= 0) return;
         km += Long.valueOf(user_run);
         bot.execute(new SendMessage(chatId, MarsSrvice.calculate_percentage(km, user_run)).replyToMessageId(mes_id));
-//        bot.execute(new SendMessage(chatId,"\nНаша средняя скорость : "+History.getSpeed() + " км/ч "));
-//
-//        bot.execute(new SendMessage(chatId,"\n На Марсе будем : "+ History.get_ve_to_marsa()));
 
         Users.add_km_for_user(user_run, user);
-
         History.history_add.put(mes_id, user_run);
-
+        Save_to_disk_history.save_to_disk_points();
 
     }
 

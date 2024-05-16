@@ -1,18 +1,20 @@
 package org.example;
 
-import javax.xml.crypto.Data;
+
+import org.example.save_to_disk.Save_to_disk_history;
+
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
+
 
 import static org.example.MarsSrvice.get_l_to_target;
 
 public class History { //история суммирования км
     static public HashMap<Integer, Integer> history_add = new HashMap<>();
 
-    static final Long starTimePoint = System.currentTimeMillis();
+    static public Long starTimePoint = System.currentTimeMillis();
 
     static public void startTime() {
 
@@ -62,6 +64,8 @@ public class History { //история суммирования км
 
         if (history_add.get(mass_id) != null) sz = history_add.get(mass_id);
         history_add.put(mass_id, nz);
+
+
         return (nz - sz);
     }
 

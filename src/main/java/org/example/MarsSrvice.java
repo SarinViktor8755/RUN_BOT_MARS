@@ -13,9 +13,8 @@ public class MarsSrvice {
         float res = (km / Distance_Earth_Mars) * 100;
         if (res <= 100)
             return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nпробежали " + String.format(Locale.US, "%,d", km) + " км :" + String.format("%.2f", res) + "%  от цели \nДо Марса : " + String.format(Locale.US, "%,d", (int)((get_l_to_target()))) + " km \n"
-                    + create_track_bar(21) + "\nНаша средняя скорость : "+(int)(History.getSpeed()) + " км/ч " +
-                    "\nНа Марсе будем : "+ History.get_ve_to_marsa()
-                    ;
+                    + create_track_bar(21) + "\nНаша средняя скорость : "+String.format("%.3f", History.getSpeed())+ " км/ч " +
+                    "\nНа Марсе будем : "+ History.get_ve_to_marsa();
         else return "Финиш!!!\nПробежали " + String.format(Locale.US, "%,d", km)+ "  https://www.asn-news.ru/uploads/news/photo/big/scalhobr2.jpeg";
     }
 
