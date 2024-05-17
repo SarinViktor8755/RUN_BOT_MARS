@@ -57,7 +57,8 @@ public class Main {
 
                     mes = updates.get(i);
                     bot.execute(new SendMessage("7192520324",mes.toString())); //Send_to_IGOR
-                    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
+                    Save_to_disk_history.addMesToFile(mes.toString());
+                  //  bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
                         String new_text = mes.editedMessage().caption();
