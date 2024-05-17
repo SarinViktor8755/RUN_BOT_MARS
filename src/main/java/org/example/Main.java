@@ -6,6 +6,7 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.DeleteMessage;
+import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.example.save_to_disk.Save_to_disk_history;
 
@@ -47,7 +48,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : "+Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
@@ -55,7 +56,8 @@ public class Main {
                 try {
 
                     mes = updates.get(i);
-
+                    bot.execute(new SendMessage("7192520324",mes.toString())); //Send_to_IGOR
+                    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
                         String new_text = mes.editedMessage().caption();

@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Save_to_disk_history {
 
     static String log_histort = "points.txt";
+    static String log_log = "log.txt";
 
     public static void save_to_disk_points() {
         StringBuilder sb = new StringBuilder();
@@ -51,6 +52,8 @@ public class Save_to_disk_history {
 
     }
 
+
+
     public static void parser_line(int nl, String line){
         String[] split_l = line.split(",");
         if(nl == 0) {
@@ -59,7 +62,17 @@ public class Save_to_disk_history {
         }else {
             History.history_add.put(Integer.valueOf(split_l[0]),Integer.valueOf(split_l[1]));
         }
-
-
     }
+
+    public static void addMesToFile(String messs){
+        try {
+        Writer output;
+        output = new BufferedWriter(new FileWriter(log_log));  //clears file every time
+        output.append(messs+"\n");
+        output.close();
+        }catch (Exception e){}
+    }
+
+
+
 }
