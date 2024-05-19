@@ -66,10 +66,13 @@ public class Save_to_disk_history {
 
     public static void addMesToFile(String messs){
         try {
-        Writer output;
-        output = new BufferedWriter(new FileWriter(log_log));  //clears file every time
-        output.append(messs+"\n");
-        output.close();
+
+            Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(log_log, true) ));
+            writer.append(messs+"\n");
+            writer.close();
+//        output.append(messs+"\n");
+//        output.close();
         }catch (Exception e){}
     }
 

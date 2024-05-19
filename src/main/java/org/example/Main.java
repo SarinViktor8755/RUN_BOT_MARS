@@ -200,7 +200,7 @@ public class Main {
 
 
     static public void check_block(Update mes,TelegramBot bot) {
-        if (mes.message().from().id() != 299695014) return;
+        if (mes.message().from().id().equals("2008008852") ) return;
         String text = mes.message().text();
         if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
         if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
