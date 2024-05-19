@@ -22,6 +22,10 @@ public class Main {
     static String BOT_TOKKEN_test = "7039553340:AAHCuowlWMQltfoQNwXOg6MUQ3srtm95N0o";
     static String BOT_TOKKEN = "6552221670:AAFpvfvUmNAEfkhkDUS5nt8HCl3N8906soc";
 
+    static String MY_ID = "2008008852";
+    static Long MY_IDl = 6467255873L;
+    static Long id_ls = 2008008852L;
+
     static public int block_lskala = 0;
 
     static public long km = 0; // ??????????? ?????????
@@ -47,8 +51,8 @@ public class Main {
         }
         start_distanc(args);
 
-        System.out.println("Distension : "+Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        System.out.println("Distension : " + Main.km);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
@@ -56,9 +60,9 @@ public class Main {
                 try {
 
                     mes = updates.get(i);
-                    bot.execute(new SendMessage("7192520324",mes.toString())); //Send_to_IGOR
+                    bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
                     Save_to_disk_history.addMesToFile(mes.toString());
-                  //  bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
+                    //  bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
                         String new_text = mes.editedMessage().caption();
@@ -92,7 +96,6 @@ public class Main {
                     } else text_mes = mes.message().text();
 
 
-
                     if (PasrserString.distanc_reader(text_mes, user)) {
                         bot.execute(new SendMessage(chatId, user.username() + " Исправил значение " + td + " на " + Main.km + " "));
                         Save_to_disk_history.save_to_disk_points();
@@ -109,9 +112,10 @@ public class Main {
                         }
                     }
 
-                       check_block(mes,bot);
-                   //   System.out.println(mes);
-                       lediskala_Del(bot, mes);
+                    check_block(mes, bot);
+
+                    lediskala_Del(bot, mes);
+                    //   System.out.println(mes);
                 } catch (NullPointerException | NumberFormatException e) {
 
                 }
@@ -163,26 +167,23 @@ public class Main {
     }
 
     static public void lediskala_Del(TelegramBot bot, Update mes) {
-        int id_ls = 2008008852;
-        int id_my= 299695014;
-    //    System.out.println(mes.editedMessage().text()==null);
-       // if (mes.editedMessage().caption() != null) return;
+        System.out.println(block_lskala);
+        int id_my = 299695014;
+        //    System.out.println(mes.editedMessage().text()==null);
+        // if (mes.editedMessage().caption() != null) return;
         System.out.println(block_lskala);
         if (block_lskala == 0) return;
 
 
-        //   System.out.println("qweqe");
+           System.out.println("qweqe");
 
 
-        if (mes.message().from().id() == id_ls) {
+        if (mes.message().from().id().equals(MY_IDl)) {
+            System.out.println("qweqe1111");
             String chatId = String.valueOf(mes.message().chat().id());
             Integer messageId = mes.message().messageId();
             String text = mes.message().text();
-            //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
 
-
-//            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
-//            bot.execute(deleteMessage);
             if (block_lskala == 2) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
@@ -192,22 +193,33 @@ public class Main {
                     if (randomBoolean(.5f)) sb.append("Бла ");
                     else sb.append("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
                 }
-
+                delMess(mes,bot);
                 bot.execute(new SendMessage(chatId, sb.toString()));
             }
+        }else System.out.println("NOT");
+
+
+    }
+
+
+    static public void check_block(Update mes, TelegramBot bot) {
+        if (mes.message().from().id().equals(MY_IDl)) return;
+        String text = mes.message().text();
+        if (text.equals("/ls0")) {
+            block_lskala = 0;
+            delMess(mes, bot);
+        }
+        if (text.equals("/ls1")) {
+            block_lskala = 1;
+            delMess(mes, bot);
+        }
+        if (text.equals("/ls2")) {
+            block_lskala = 2;
+            delMess(mes, bot);
         }
     }
 
-
-    static public void check_block(Update mes,TelegramBot bot) {
-        if (mes.message().from().id().equals("2008008852") ) return;
-        String text = mes.message().text();
-        if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
-        if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
-        if (text.equals("/ls2")) {block_lskala = 2;delMess(mes,bot);}
-    }
-
-    static private void delMess(Update mes,TelegramBot bot){
+    static private void delMess(Update mes, TelegramBot bot) {
         String chatId = String.valueOf(mes.message().chat().id());
         Integer messageId = mes.message().messageId();
         DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
