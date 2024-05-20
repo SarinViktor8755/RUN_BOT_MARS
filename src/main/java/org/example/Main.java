@@ -48,7 +48,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : "+Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
