@@ -10,6 +10,7 @@ import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.example.save_to_disk.Save_to_disk_history;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,7 +32,10 @@ public class Main {
     static public ArrayList<String> Admins_nik = new ArrayList<>();
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        Statistics_run.read_log_mess();
+
+
         System.out.println("Start_BOT_RUN");
 
         add_admins();

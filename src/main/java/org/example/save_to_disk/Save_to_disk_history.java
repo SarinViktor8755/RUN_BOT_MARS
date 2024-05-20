@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Save_to_disk_history {
 
     static String log_histort = "points.txt";
-    static String log_log = "log.txt";
+    static public String log_log = "log.txt";
 
     public static void save_to_disk_points() {
         StringBuilder sb = new StringBuilder();
