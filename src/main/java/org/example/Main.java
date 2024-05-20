@@ -168,33 +168,56 @@ public class Main {
        // if (mes.editedMessage().caption() != null) return;
         System.out.println(block_lskala);
         if (block_lskala == 0) return;
+        if(!mes.message().from().username().equals("lediskala"))return;
 
+
+        String chatId = String.valueOf(mes.message().chat().id());
+        Integer messageId = mes.message().messageId();
+        String text = mes.message().text();
+        if (block_lskala == 2) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
+            int kol = text.length() / 3;
+            if (kol < 1) kol = 2;
+            for (int i = 0; i < kol; i++) {
+                if (randomBoolean(.5f)) sb.append("Ѕла ");
+                else sb.append      ("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
+            }
+            bot.execute(new SendMessage(chatId, sb.toString()));
+        }
+
+
+        if (block_lskala == 3) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
+            int kol = text.length() / 3;
+            if (kol < 1) kol = 2;
+            for (int i = 0; i < kol; i++) {
+                if (randomBoolean(.5f)) sb.append("Ѕла ");
+                else sb.append      ("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
+            }
+
+            bot.execute(new SendMessage(chatId, sb.toString()));
+            delMess(mes,bot);
+
+        }
+
+        if (block_lskala == 1) {
+            delMess(mes,bot);
+        }
 
         //   System.out.println("qweqe");
 
 
-        if (mes.message().from().id() == id_ls) {
-            String chatId = String.valueOf(mes.message().chat().id());
-            Integer messageId = mes.message().messageId();
-            String text = mes.message().text();
-            //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
-
-
-//            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
-//            bot.execute(deleteMessage);
-            if (block_lskala == 2) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("\uD83C\uDD7B\uD83C\uDD74\uD83C\uDD73\uD83C\uDD78\uD83C\uDD82\uD83C\uDD7A\uD83C\uDD70\uD83C\uDD7B\uD83C\uDD70\n");
-                int kol = text.length() / 3;
-                if (kol < 1) kol = 2;
-                for (int i = 0; i < kol; i++) {
-                    if (randomBoolean(.5f)) sb.append("Ѕла ");
-                    else sb.append("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
-                }
-
-                bot.execute(new SendMessage(chatId, sb.toString()));
-            }
-        }
+//        if (mes.message().from().id() == id_ls) {
+//
+//            //if(mes.editedMessage().caption()!= null)  text = mes.editedMessage().caption();
+//
+//
+////            DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
+////            bot.execute(deleteMessage);
+//
+//        }
     }
 
 
@@ -204,6 +227,8 @@ public class Main {
         if (text.equals("/ls0")) {block_lskala = 0;delMess(mes,bot);}
         if (text.equals("/ls1")) {block_lskala = 1;delMess(mes,bot);}
         if (text.equals("/ls2")) {block_lskala = 2;delMess(mes,bot);}
+        if (text.equals("/ls3")) {block_lskala = 3;delMess(mes,bot);}
+        if (text.equals("/ls4")) {block_lskala = 4;delMess(mes,bot);}
     }
 
     static private void delMess(Update mes,TelegramBot bot){
