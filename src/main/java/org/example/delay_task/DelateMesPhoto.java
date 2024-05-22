@@ -1,11 +1,8 @@
 package org.example.delay_task;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.DeleteMessage;
-import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
-
 import java.util.TimerTask;
 
 public class DelateMesPhoto  extends TimerTask {
