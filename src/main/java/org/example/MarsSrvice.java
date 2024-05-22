@@ -8,28 +8,30 @@ import static org.example.Main.km;
 public class MarsSrvice {
 
     static final String ballEmoji = "\uD83D\uDC4D";
+
     static String calculate_percentage(long km, int user_run) {
 
         float res = (km / Distance_Earth_Mars) * 100;
         if (res <= 100)
-            return "Принято " + user_run + " км "+ create_emogi(user_run)+"\nПробежали " + String.format(Locale.US, "%,d", km) + " км ||" + String.format(Locale.US, "%,d", (int)((get_l_to_target()))) + " km \n"
-                    + create_track_bar(33, res) + "\nСредняя: "+String.format("%.2f", History.getSpeed())+ " км/ч " +
-                    "|"+ History.get_ve_to_marsa();
-        else return "Финиш!!!\nПробежали " + String.format(Locale.US, "%,d", km)+ "  https://www.asn-news.ru/uploads/news/photo/big/scalhobr2.jpeg";
+            return "Принято " + user_run + " км " + create_emogi(user_run) + "\nПробежали " + String.format(Locale.US, "%,d", km) + " км ||" + String.format(Locale.US, "%,d", (int) ((get_l_to_target()))) + " km \n"
+                    + create_track_bar(33, res) + "\nСредняя: " + String.format("%.2f", History.getSpeed()) + " км/ч " +
+                    "|" + History.get_ve_to_marsa();
+        else
+            return "Финиш!!!\nПробежали " + String.format(Locale.US, "%,d", km) + "  https://www.asn-news.ru/uploads/news/photo/big/scalhobr2.jpeg";
     }
 
-    static public float get_l_to_target(){
+    static public float get_l_to_target() {
         return Distance_Earth_Mars - km;
     }
 
     static String create_track_bar(int length_bar) {
-        int point = (int)map(0, Distance_Earth_Mars,0,length_bar, km);
+        int point = (int) map(0, Distance_Earth_Mars, 0, length_bar, km);
         StringBuilder sb = new StringBuilder();
         sb.append("З|");
         for (int i = 0; i < length_bar; i++) {
-            if(point == i ) sb.append("*(МЫ)>");
-            if(point < i ) sb.append("-");
-            if(point > i ) sb.append("=");
+            if (point == i) sb.append("*(МЫ)>");
+            if (point < i) sb.append("-");
+            if (point > i) sb.append("=");
 
         }
         sb.append("|М");
@@ -37,13 +39,13 @@ public class MarsSrvice {
     }
 
     static String create_track_bar(int length_bar, float proc) {
-        int point = (int)map(0, Distance_Earth_Mars,0,length_bar, km);
+        int point = (int) map(0, Distance_Earth_Mars, 0, length_bar, km);
         StringBuilder sb = new StringBuilder();
         sb.append("З|");
         for (int i = 0; i < length_bar; i++) {
-            if(point == i ) sb.append(""+String.format("%.1f", proc)+"%>");
-            if(point < i ) sb.append("-");
-            if(point > i ) sb.append("=");
+            if (point == i) sb.append("" + String.format("%.1f", proc) + "%>");
+            if (point < i) sb.append("-");
+            if (point > i) sb.append("=");
 
         }
         sb.append("|М");
@@ -52,7 +54,7 @@ public class MarsSrvice {
 
     static String create_emogi(long km) {
         StringBuilder sb = new StringBuilder();
-        int kol = (int)(km/4f);
+        int kol = (int) (km / 4f);
         if (kol > 7) kol = 7;
         if (kol < 1) kol = 1;
         for (int i = 0; i < kol; i++) {
@@ -64,7 +66,7 @@ public class MarsSrvice {
     }
 
 
-    static public float map (float inRangeStart, float inRangeEnd, float outRangeStart, float outRangeEnd, float value) {
+    static public float map(float inRangeStart, float inRangeEnd, float outRangeStart, float outRangeEnd, float value) {
         return outRangeStart + (value - inRangeStart) * (outRangeEnd - outRangeStart) / (inRangeEnd - inRangeStart);
     }
 }

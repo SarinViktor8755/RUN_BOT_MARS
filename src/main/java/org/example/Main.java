@@ -8,6 +8,7 @@ import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.DeleteMessage;
 import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.example.delay_task.DelateMesPhoto;
 import org.example.delay_task.MyTimerTask;
@@ -15,6 +16,9 @@ import org.example.save_to_disk.Save_to_disk_history;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -33,7 +37,9 @@ public class Main {
 
     static public int block_lskala = 0;
 
-    static public long km = 0; // ??????????? ?????????
+    static public long km = 0; // дистанци€
+    static public long km_temp = 0; // дистанци€ временна€
+
     static public final float Distance_Earth_Mars = 54_600; // ???? ?????????
 
     static public ArrayList<String> Admins_nik = new ArrayList<>();
@@ -59,7 +65,7 @@ public class Main {
 
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
 
         ////////////////////
         bot.setUpdatesListener(updates -> {
@@ -68,7 +74,7 @@ public class Main {
                 try {
 
                     mes = updates.get(i);
-
+                    km_temp = km;
                     bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
                     Save_to_disk_history.addMesToFile(mes.toString());
                     //  bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
@@ -87,6 +93,7 @@ public class Main {
                         Main.km += km_delta;
 
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "»справлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
+
                         Save_to_disk_history.save_to_disk_points();
                         break;
                         // System.out.println("---");
@@ -121,9 +128,15 @@ public class Main {
                             ask_km(text_mes, bot, chatId, user, mes.message().messageId());
                         }
                     }
+                    //check_1000
 
+
+                    if(check_thousand()){
+                        send_photo(bot,"22.jpg",mes.message().chat().id());
+                    }
+
+                    //skala
                     check_block(mes, bot);
-
                     lediskala_Del(bot, mes);
                     //   System.out.println(mes);
                 } catch (NullPointerException | NumberFormatException e) {
@@ -154,6 +167,7 @@ public class Main {
         km += Long.valueOf(user_run);
         bot.execute(new SendMessage(chatId, MarsSrvice.calculate_percentage(km, user_run)).replyToMessageId(mes_id));
 
+
         Users.add_km_for_user(user_run, user);
         History.history_add.put(mes_id, user_run);
         Save_to_disk_history.save_to_disk_points();
@@ -164,7 +178,7 @@ public class Main {
     static public void give_my_photo(long chatId, TelegramBot bot, int mes_id) {
         SendResponse ov = bot.execute(new SendMessage(chatId, "¬аши км не добавлены, довер€й, но провер€й, пришли фото или скрин с пробежки\uD83D\uDE09").replyToMessageId(mes_id));
         System.out.println(ov);
-        start_delate_mes(bot,ov);
+        start_delate_mes(bot, ov);
 
     }
 
@@ -179,6 +193,27 @@ public class Main {
 
     }
 
+    static public void send_photo(TelegramBot bot, String filename, Long chat_id) {  // отправить фотку
+        try {
+            Path imagePath = Paths.get(filename);
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+            bot.execute(new SendPhoto(chat_id, imageBytes));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    static public boolean check_thousand() {
+//        System.out.println("----------");
+//        System.out.println(km / 1000);
+//        System.out.println(km_temp / 1000);
+//        System.out.println("----------");
+        if((km / 1000)!=(km_temp / 1000)) return true;
+        return false;
+    }
+
     static public void lediskala_Del(TelegramBot bot, Update mes) {
         System.out.println(block_lskala);
         int id_my = 299695014;
@@ -186,11 +221,10 @@ public class Main {
         // if (mes.editedMessage().caption() != null) return;
         System.out.println(block_lskala);
         if (block_lskala == 0) return;
-        if(!mes.message().from().username().equals("lediskala"))return;
+        if (!mes.message().from().username().equals("lediskala")) return;
 
 
-
-           System.out.println("qweqe");
+        System.out.println("qweqe");
 
 
         if (mes.message().from().id().equals(MY_IDl)) {
@@ -208,10 +242,10 @@ public class Main {
                     if (randomBoolean(.5f)) sb.append("Ѕла ");
                     else sb.append("бла \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
                 }
-                delMess(mes,bot);
+                delMess(mes, bot);
                 bot.execute(new SendMessage(chatId, sb.toString()));
             }
-        }else System.out.println("NOT");
+        } else System.out.println("NOT");
 
 
     }
@@ -243,15 +277,15 @@ public class Main {
 
     }
 
-    static private void start_statisic(TelegramBot bot, Update mes){
-        MyTimerTask mMyTimerTask = new MyTimerTask(bot,mes);
-        Statistics_run.mTimer.schedule(mMyTimerTask, 1000,500);
+    static private void start_statisic(TelegramBot bot, Update mes) {
+        MyTimerTask mMyTimerTask = new MyTimerTask(bot, mes);
+        Statistics_run.mTimer.schedule(mMyTimerTask, 1000, 500);
     }
 
-    static private void start_delate_mes(TelegramBot bot, SendResponse ov){ // далить сообщение через врем€
-        DelateMesPhoto delateMesPhoto = new DelateMesPhoto(bot,ov);
+    static private void start_delate_mes(TelegramBot bot, SendResponse ov) { // далить сообщение через врем€
+        DelateMesPhoto delateMesPhoto = new DelateMesPhoto(bot, ov);
         Timer timer = new Timer();
-        timer.schedule(delateMesPhoto,Constants.MINUTE);
+        timer.schedule(delateMesPhoto, Constants.MINUTE);
 
     }
 
