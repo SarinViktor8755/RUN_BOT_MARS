@@ -46,7 +46,7 @@ public class History { //история суммирования км
         if (getSpeed() == 0.0) return "нет данных";
         double v = get_l_to_target() / getSpeed();
         long  ost_v_ch = ((long) (v * Constants.HOUR)) + System.currentTimeMillis();
-        String pattern = "dd-MM-yyyy";
+        String pattern = "dd MMMM yy" + "г.";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date_f = simpleDateFormat.format(new Date(ost_v_ch));
         return date_f;
