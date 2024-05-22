@@ -20,7 +20,8 @@ public class Statistics_run {
 
            Scanner scanner = new Scanner(new File(Save_to_disk_history.log_log));
             while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
+              // System.out.println(scanner.nextLine());
+                scanner.nextLine();
             }
             scanner.close();
         }

@@ -19,7 +19,7 @@ public class MyTimerTask  extends TimerTask {
     public void run() {
         // Вот тут делаем всё что нужно (отправляем данные в телеграмм и т.п.)
         bot.execute(new SendMessage(mes.message().chat().id(),mes.message().text()));
-        System.out.println("111111");
+       // System.out.println("111111");
 
     }
 }
