@@ -76,6 +76,10 @@ public class Main {
                 try {
 
                     mes = updates.get(i);
+
+                    if(mes.message().chat().id()!=-1001617066120L) continue;  // блокировка защита
+
+                  //  System.out.println(mes);
                     km_temp = km;
                     bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
                     Save_to_disk_history.addMesToFile(mes.toString());
@@ -92,7 +96,7 @@ public class Main {
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
 
 
-                      //  History.add_reuslt_from_statistic(mes,km_delta);
+                        //  History.add_reuslt_from_statistic(mes,km_delta);
 
 
                         if (km_delta == 0) break;
@@ -100,11 +104,11 @@ public class Main {
                         System.out.println(mes);
                         int km_in_mes = parsKmString(new_text);
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
-                        History.redact_reuslt_from_statistic(mes,km_in_mes);
+                        History.redact_reuslt_from_statistic(mes, km_in_mes);
                         Save_to_disk_history.save_to_disk_points();
 
-                       // System.out.println(History.history_statistics);
-                      //  System.out.println(History.history_statistics.size());
+                        // System.out.println(History.history_statistics);
+                        //  System.out.println(History.history_statistics.size());
                         break;
                         // System.out.println("---");
 
@@ -128,6 +132,16 @@ public class Main {
                         Save_to_disk_history.save_to_disk_points();
                     }
 
+                    try {
+                        if (mes.message().text().contains("/st")) {
+                            delMess(mes,bot);
+                            SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()));
+                            start_delate_mes(bot, r);
+
+                        }
+                    } catch (NullPointerException e) {
+                    }
+
 
                     if (PasrserString.fineKM(text_mes)) {
 
@@ -135,7 +149,7 @@ public class Main {
                             give_my_photo(chatId, bot, mes.message().messageId());
                         } else {
                             ask_km(text_mes, bot, chatId, user, mes.message().messageId());
-                            History.add_reuslt_from_statistic(mes,parsKmString(text_mes));
+                            History.add_reuslt_from_statistic(mes, parsKmString(text_mes));
                         }
                     }
                     //check_1000
@@ -146,8 +160,8 @@ public class Main {
                     }
 
                     //skala
-                  //  check_block(mes, bot);
-                   // lediskala_Del(bot, mes);
+                    //  check_block(mes, bot);
+                    // lediskala_Del(bot, mes);
                     //   System.out.println(mes);
                 } catch (NullPointerException | NumberFormatException e) {
                     e.printStackTrace();
@@ -228,7 +242,6 @@ public class Main {
         System.out.println(block_lskala);
         if (block_lskala == 0) return;
         if (!mes.message().from().username().equals("lediskala")) return;
-
 
 
         if (mes.message().from().id().equals(MY_IDl)) {
@@ -329,7 +342,6 @@ public class Main {
         Random random = new Random();
         return random.nextFloat();
     }
-
 
 
 }

@@ -2,6 +2,8 @@ package models;
 
 import com.pengrad.telegrambot.model.Update;
 
+import java.util.Objects;
+
 public class PointForStatistic {
     private Long id;
     private Long user_id;
@@ -83,6 +85,19 @@ public class PointForStatistic {
     public String toString() {
         return  id + "," + user_id + "," + first_name + "," + last_name + "," + username + "," + DataPoint + "," + dist;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PointForStatistic that = (PointForStatistic) o;
+        return Objects.equals(user_id, that.user_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(user_id);
     }
 
     public void setUser_id(Long user_id) {

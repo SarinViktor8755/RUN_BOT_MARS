@@ -1,16 +1,17 @@
 package org.example;
 
+import models.PointForStatistic;
 import org.example.save_to_disk.Save_to_disk_history;
 import org.json.simple.JSONObject;
 
 import java.io.*;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 
 public class Statistics_run {
 
 
     public static Timer mTimer = new Timer();
+    private static int sum_dist = 0;
 
 
     public static void create_statistic() {
@@ -19,10 +20,9 @@ public class Statistics_run {
     }
 
     public static void parser_log() { // рабирает строку из логу для статистики
-        String jsonString  = "{" + read_log_mess() + "}";
+        String jsonString = "{" + read_log_mess() + "}";
         System.out.println(jsonString);
-       // JSONObject obj = new JSONObject(jsonString);
-
+        // JSONObject obj = new JSONObject(jsonString);
 
 
     }
@@ -56,6 +56,61 @@ public class Statistics_run {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static String create_statisstic() {
+        StringBuilder sb = new StringBuilder();
+        float proc;
+
+        ArrayList<PointForStatistic> t = (ArrayList<PointForStatistic>) History.history_statistics.clone();
+        PointForStatistic o1, o2;
+        for (int i = 0; i < t.size(); i++) {
+            for (int j = 0; j < t.size(); j++) {
+                if (i == j) continue;
+                o1 = t.get(i);
+                o2 = t.get(j);
+                if (o1.equals(o2)) {
+                    o1.setDist(o2.getDist() + o1.getDist());
+                    o2.setDist(0);
+                }
+            }
+        }
+
+
+        //  History.history_statistics.get(0).
+
+        Collections.sort(t, new Comparator<PointForStatistic>() {
+            @Override
+            public int compare(PointForStatistic o1, PointForStatistic o2) {
+                return o2.getDist() - o1.getDist();
+            }
+        });
+
+
+        get_sum_for_statistic();
+        for (int i = 0; i < t.size(); i++) {
+            if (t.get(i).getDist() == 0) continue;
+            proc = t.get(i).getDist() / Float.valueOf(sum_dist) * 100;
+            sb.append((i + 1) + " " + get_name_user(t.get(i)) + " - " + t.get(i).getDist() + "   _" + ((int) (proc)) + " %\n");
+        }
+        return sb.toString();
+
+    }
+
+
+    public static String get_name_user(PointForStatistic p) {
+        if (!p.getUsername().equals("null")) return p.getUsername();
+        if (!p.getFirst_name().equals("null")) return p.getFirst_name();
+        if (!p.getLast_name().equals("null")) return p.getLast_name();
+        return "NONO";
+    }
+
+    public static void get_sum_for_statistic() {
+        Statistics_run.sum_dist = 0;
+        for (int i = 0; i < History.history_statistics.size(); i++) {
+            Statistics_run.sum_dist += History.history_statistics.get(i).getDist();
+        }
+
     }
 
 

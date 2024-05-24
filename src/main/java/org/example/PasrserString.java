@@ -42,4 +42,8 @@ public class PasrserString {
 
         return sum_km;
     }
+
+//    public static String return_statistic(String textMes, User user) {
+//        return Statistics_run.create_statisstic();
+//    }
 }
