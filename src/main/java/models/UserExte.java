@@ -1,4 +1,4 @@
-package org.example;
+package models;
 
 import com.pengrad.telegrambot.model.User;
 

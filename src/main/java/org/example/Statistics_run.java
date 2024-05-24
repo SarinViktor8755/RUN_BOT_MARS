@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.save_to_disk.Save_to_disk_history;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.Scanner;
@@ -12,12 +13,22 @@ public class Statistics_run {
     public static Timer mTimer = new Timer();
 
 
-    public static void create_statistic(){
+    public static void create_statistic() {
         String text = read_log_mess();
 
     }
 
-    public static String read_log_mess()  {
+    public static void parser_log() { // рабирает строку из логу для статистики
+        String jsonString  = "{" + read_log_mess() + "}";
+        System.out.println(jsonString);
+       // JSONObject obj = new JSONObject(jsonString);
+
+
+
+    }
+
+
+    public static String read_log_mess() {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(Save_to_disk_history.log_log));
@@ -34,7 +45,7 @@ public class Statistics_run {
                 line = br.readLine();
             }
             String everything = sb.toString();
-            System.out.println(everything);
+            //   System.out.println(everything);
             return everything;
         } catch (IOException e) {
             throw new RuntimeException(e);

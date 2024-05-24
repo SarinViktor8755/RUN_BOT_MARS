@@ -6,10 +6,10 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.DeleteMessage;
-import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
+import models.Users;
 import org.example.delay_task.DelateMesPhoto;
 import org.example.delay_task.MyTimerTask;
 import org.example.save_to_disk.Save_to_disk_history;
@@ -45,12 +45,15 @@ public class Main {
     static public ArrayList<String> Admins_nik = new ArrayList<>();
 
     public static void main(String[] args) throws FileNotFoundException {
-        Statistics_run.read_log_mess();
+        //Statistics_run.parser_log();
 
 
         System.out.println("Start_BOT_RUN");
 
         add_admins();
+        Save_to_disk_history.load_to_disk_points_for_statistoc();
+        System.out.println(History.history_statistics);
+        System.out.println("!!!!!!!!!!!!!!!");
         try {
             Save_to_disk_history.read_to_disk_history();
         } catch (IOException e) {
@@ -88,12 +91,20 @@ public class Main {
 
                         int km_delta = History.make_changes_to_the_message(m_id, new_text);
 
+
+                      //  History.add_reuslt_from_statistic(mes,km_delta);
+
+
                         if (km_delta == 0) break;
                         Main.km += km_delta;
-
-                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, parsKmString(new_text))).replyToMessageId(m_id));
-
+                        System.out.println(mes);
+                        int km_in_mes = parsKmString(new_text);
+                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
+                        History.redact_reuslt_from_statistic(mes,km_in_mes);
                         Save_to_disk_history.save_to_disk_points();
+
+                       // System.out.println(History.history_statistics);
+                      //  System.out.println(History.history_statistics.size());
                         break;
                         // System.out.println("---");
 
@@ -123,23 +134,23 @@ public class Main {
                         if (!isPhoto) {
                             give_my_photo(chatId, bot, mes.message().messageId());
                         } else {
-
                             ask_km(text_mes, bot, chatId, user, mes.message().messageId());
+                            History.add_reuslt_from_statistic(mes,parsKmString(text_mes));
                         }
                     }
                     //check_1000
 
 
-                    if(check_thousand()){
-                        send_photo(bot,"22.jpg",mes.message().chat().id());
+                    if (check_thousand()) {
+                        send_photo(bot, "22.jpg", mes.message().chat().id());
                     }
 
                     //skala
-                    check_block(mes, bot);
-                    lediskala_Del(bot, mes);
+                  //  check_block(mes, bot);
+                   // lediskala_Del(bot, mes);
                     //   System.out.println(mes);
                 } catch (NullPointerException | NumberFormatException e) {
-
+                    e.printStackTrace();
                 }
 
             }
@@ -205,11 +216,7 @@ public class Main {
     }
 
     static public boolean check_thousand() {
-//        System.out.println("----------");
-//        System.out.println(km / 1000);
-//        System.out.println(km_temp / 1000);
-//        System.out.println("----------");
-        if((km / 1000)!=(km_temp / 1000)) return true;
+        if ((km / 1000) != (km_temp / 1000)) return true;
         return false;
     }
 
@@ -223,11 +230,9 @@ public class Main {
         if (!mes.message().from().username().equals("lediskala")) return;
 
 
-        System.out.println("qweqe");
-
 
         if (mes.message().from().id().equals(MY_IDl)) {
-            System.out.println("qweqe1111");
+
             String chatId = String.valueOf(mes.message().chat().id());
             Integer messageId = mes.message().messageId();
             String text = mes.message().text();
@@ -268,12 +273,10 @@ public class Main {
     }
 
     static private void delMess(Update mes, TelegramBot bot) {
-
         String chatId = String.valueOf(mes.message().chat().id());
         Integer messageId = mes.message().messageId();
         DeleteMessage deleteMessage = new DeleteMessage(chatId, messageId);
         bot.execute(deleteMessage);
-
     }
 
     static private void start_statisic(TelegramBot bot, Update mes) {
@@ -326,7 +329,6 @@ public class Main {
         Random random = new Random();
         return random.nextFloat();
     }
-
 
 
 

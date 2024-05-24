@@ -1,10 +1,14 @@
 package org.example;
 
 
+import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.User;
+import models.PointForStatistic;
 import org.example.save_to_disk.Save_to_disk_history;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -12,7 +16,9 @@ import java.util.HashMap;
 import static org.example.MarsSrvice.get_l_to_target;
 
 public class History { //история суммирования км
-    static public HashMap<Integer, Integer> history_add = new HashMap<>();
+    static public HashMap<Integer, Integer> history_add = new HashMap<>();// история точки
+    //   static public HashMap<Integer, Integer> history_statistics = new HashMap<>();// история точки для статистики
+    static public ArrayList<PointForStatistic> history_statistics = new ArrayList<>();// история точки для статистики
 
     static public Long starTimePoint;
 
@@ -45,7 +51,7 @@ public class History { //история суммирования км
         //      раст / скорость
         if (getSpeed() == 0.0) return "нет данных";
         double v = get_l_to_target() / getSpeed();
-        long  ost_v_ch = ((long) (v * Constants.HOUR)) + System.currentTimeMillis();
+        long ost_v_ch = ((long) (v * Constants.HOUR)) + System.currentTimeMillis();
         String pattern = "dd MMMM yy" + "г.";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date_f = simpleDateFormat.format(new Date(ost_v_ch));
@@ -68,6 +74,32 @@ public class History { //история суммирования км
 
         return (nz - sz);
     }
+
+    /////////////////////////////////////
+
+    static public void add_reuslt_from_statistic(Update mes, int km) {
+        PointForStatistic p = new PointForStatistic(mes, km);
+        History.history_statistics.add(p);
+        Save_to_disk_history.save_to_disk_points_for_statistoc();
+        System.out.println(History.history_statistics);
+
+
+    }
+
+
+    public static void redact_reuslt_from_statistic(Update mes, int kmDelta) {
+        int mes_id = mes.editedMessage().messageId();
+        for (int i = 0; i < History.history_statistics.size(); i++) {
+            PointForStatistic p = History.history_statistics.get(i);
+            if(mes_id == p.getId()){
+                p.setDist(kmDelta);
+                Save_to_disk_history.save_to_disk_points_for_statistoc();
+                return;
+            }
+        }
+    }
+
+
 
 
 }
