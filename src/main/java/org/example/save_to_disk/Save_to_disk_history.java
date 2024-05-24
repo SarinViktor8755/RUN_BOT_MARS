@@ -101,13 +101,13 @@ public class Save_to_disk_history {
         try {
             History.history_statistics.clear();
             BufferedReader br = new BufferedReader(new FileReader(ps_log));
-            StringBuilder sb = new StringBuilder();
+
             String line = br.readLine();
             int i = 0;
 
-            PointForStatistic p = new PointForStatistic();
+
             while (line != null) {
-                line = br.readLine();
+                PointForStatistic p = new PointForStatistic();
                 i++;
                 String[] split_l = line.split(",");
                 p.setId(Long.valueOf(split_l[0]));
@@ -118,7 +118,7 @@ public class Save_to_disk_history {
                 p.setDataPoint(Long.valueOf(split_l[5]));
                 p.setDist(Integer.valueOf(split_l[6]));
                 History.history_statistics.add(p);
-
+                line = br.readLine();
             }
         } catch (Exception e) {
             e.printStackTrace();
