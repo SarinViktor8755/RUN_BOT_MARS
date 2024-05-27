@@ -38,8 +38,8 @@ public class Main {
 
     static public int block_lskala = 0;
 
-    static public long km = 0; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-    static public long km_temp = 0; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    static public long km = 0; // ?????????
+    static public long km_temp = 0; // ????????? ?????????
 
     static public final float Distance_Earth_Mars = 54_600; // ???? ?????????
 
@@ -79,7 +79,7 @@ public class Main {
 
                     mes = updates.get(i);
 
-                   // if(mes.message().chat().id()!=-1001617066120L) continue;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                   // if(mes.message().chat().id()!=-1001617066120L) continue;  // ?????????? ??????
 
                   //  System.out.println(mes);
                     km_temp = km;
@@ -105,7 +105,7 @@ public class Main {
                         Main.km += km_delta;
                         System.out.println(mes);
                         int km_in_mes = parsKmString(new_text);
-                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
+                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "??????????::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
                         History.redact_reuslt_from_statistic(mes, km_in_mes);
                         Save_to_disk_history.save_to_disk_points();
 
@@ -130,7 +130,7 @@ public class Main {
 
 
                     if (PasrserString.distanc_reader(text_mes, user)) {
-                        bot.execute(new SendMessage(chatId, user.username() + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + td + " пїЅпїЅ " + Main.km + " "));
+                        bot.execute(new SendMessage(chatId, user.username() + " ???????? ???????? " + td + " ?? " + Main.km + " "));
                         Save_to_disk_history.save_to_disk_points();
                     }
 
@@ -146,7 +146,7 @@ public class Main {
                     }
 
                     try {
-                        if (mes.message().text().contains("/c")) {
+                        if (mes.message().text().toLowerCase().contains("/c".toLowerCase())) {
                             delMess(mes,bot);
                             SendResponse r = bot.execute(new SendMessage(chatId, Calck.main_calck(mes.message().text())));
                             start_delate_mes(bot, r);
@@ -155,6 +155,9 @@ public class Main {
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        SendResponse r = bot.execute(new SendMessage(chatId, "неверный формат записи"));
+                        start_delate_mes(bot, r);
                     }
 
 
@@ -199,7 +202,7 @@ public class Main {
 
     }
 
-    ///// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    ///// ???????? ???????? ????????
     static public void ask_km(String text_mes, TelegramBot bot, long chatId, User user, Integer mes_id) {
         int user_run = (int) parsKmString(text_mes);
         if (user_run <= 0) return;
@@ -213,9 +216,9 @@ public class Main {
 
     }
 
-    //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+    //// ???????? ???????? ????
     static public void give_my_photo(long chatId, TelegramBot bot, int mes_id) {
-        SendResponse ov = bot.execute(new SendMessage(chatId, "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\uD83D\uDE09").replyToMessageId(mes_id));
+        SendResponse ov = bot.execute(new SendMessage(chatId, "???? ?? ?? ?????????, ???????, ?? ????????, ?????? ???? ??? ????? ? ????????\uD83D\uDE09").replyToMessageId(mes_id));
         System.out.println(ov);
         start_delate_mes(bot, ov);
 
@@ -233,7 +236,7 @@ public class Main {
 
     }
 
-    static public void send_photo(TelegramBot bot, String filename, Long chat_id) {  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    static public void send_photo(TelegramBot bot, String filename, Long chat_id) {  // ????????? ?????
         try {
             Path imagePath = Paths.get(filename);
             byte[] imageBytes = Files.readAllBytes(imagePath);
@@ -272,8 +275,8 @@ public class Main {
                 int kol = text.length() / 3;
                 if (kol < 1) kol = 2;
                 for (int i = 0; i < kol; i++) {
-                    if (randomBoolean(.5f)) sb.append("пїЅпїЅпїЅ ");
-                    else sb.append("пїЅпїЅпїЅ \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
+                    if (randomBoolean(.5f)) sb.append("??? ");
+                    else sb.append("??? \uD83E\uDD84\uD83E\uDD84\uD83E\uDD84");
                 }
                 delMess(mes, bot);
                 bot.execute(new SendMessage(chatId, sb.toString()));
@@ -313,11 +316,10 @@ public class Main {
         Statistics_run.mTimer.schedule(mMyTimerTask, 1000, 500);
     }
 
-    static private void start_delate_mes(TelegramBot bot, SendResponse ov) { // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    static private void start_delate_mes(TelegramBot bot, SendResponse ov) { // ?????? ????????? ????? ?????
         DelateMesPhoto delateMesPhoto = new DelateMesPhoto(bot, ov);
         Timer timer = new Timer();
         timer.schedule(delateMesPhoto, Constants.MINUTE);
-
     }
 
     static public void delate_mess(TelegramBot bot, Update mes) {
