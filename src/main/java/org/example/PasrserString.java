@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class PasrserString {
 
     static public boolean fineKM(String enterS) {
-        return enterS.contains("#");
+        return enterS.contains("#κμ");
     }
 
     static public boolean distanc_reader(String enterS,User user ) {

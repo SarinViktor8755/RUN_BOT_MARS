@@ -77,7 +77,7 @@ public class Main {
 
                     mes = updates.get(i);
 
-                    if(mes.message().chat().id()!=-1001617066120L) continue;  // блокировка защита
+                   // if(mes.message().chat().id()!=-1001617066120L) continue;  // блокировка защита
 
                   //  System.out.println(mes);
                     km_temp = km;

@@ -61,11 +61,14 @@ public class Statistics_run {
     public static String create_statisstic() {
         StringBuilder sb = new StringBuilder();
         float proc;
+        int max_ch = 0;
 
         ArrayList<PointForStatistic> t = (ArrayList<PointForStatistic>) History.history_statistics.clone();
         PointForStatistic o1, o2;
         for (int i = 0; i < t.size(); i++) {
             for (int j = 0; j < t.size(); j++) {
+
+                if (get_name_user(t.get(i)).length() > max_ch) max_ch = get_name_user(t.get(i)).length();
                 if (i == j) continue;
                 o1 = t.get(i);
                 o2 = t.get(j);
@@ -75,7 +78,6 @@ public class Statistics_run {
                 }
             }
         }
-
 
         //  History.history_statistics.get(0).
 
@@ -88,13 +90,20 @@ public class Statistics_run {
 
 
         get_sum_for_statistic();
+        sb.append("Таблица лидеров:\n \n ");
         for (int i = 0; i < t.size(); i++) {
             if (t.get(i).getDist() == 0) continue;
             proc = t.get(i).getDist() / Float.valueOf(sum_dist) * 100;
             sb.append((i + 1) + " " + get_name_user(t.get(i)) + " - " + t.get(i).getDist() + "   _" + ((int) (proc)) + " %\n");
         }
+        sb.append("\nСредняя скорость: " + String.format("%.2f", History.getSpeed()) + " км/ч " + "\n" +
+                "Расчетная дата прибытия: " + History.get_ve_to_marsa());
         return sb.toString();
 
+    }
+
+    public static String create_probel(StringBuilder stringBuilder, String name, int max_ch) {
+        return "";
     }
 
 
