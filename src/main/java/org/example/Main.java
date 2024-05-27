@@ -48,7 +48,6 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         //Statistics_run.parser_log();
 
-
         System.out.println("Start_BOT_RUN");
 
         add_admins();
@@ -68,16 +67,16 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
-
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+//        System.out.println("main_calck");
+//        System.out.println(main_calck("6:00"));
         ////////////////////
         bot.setUpdatesListener(updates -> {
             Update mes;
 
             for (int i = 0; i < updates.size(); i++) {
                 try {
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-                    System.out.println(main_calck("asdasd 05:42"));
+
                     mes = updates.get(i);
 
                    // if(mes.message().chat().id()!=-1001617066120L) continue;  // ���������� ������
@@ -140,6 +139,18 @@ public class Main {
                             delMess(mes,bot);
                             SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()));
                             start_delate_mes(bot, r);
+
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        if (mes.message().text().contains("/c")) {
+                            delMess(mes,bot);
+                            SendResponse r = bot.execute(new SendMessage(chatId, Calck.main_calck(mes.message().text())));
+                            start_delate_mes(bot, r);
+
 
                         }
                     } catch (NullPointerException e) {

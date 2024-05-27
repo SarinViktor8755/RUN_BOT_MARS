@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     implementation ("com.github.pengrad:java-telegram-bot-api:7.2.1")
-    implementation ("com.googlecode.json-simple:json-simple:1.1.1")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 

@@ -11,7 +11,8 @@ public class Calck {
 
         for (int i = 0; i < d.length; i++) {
             time = sumSec(tempToSec(a[0], a[1]), d[i]);
-            sb.append(String.format("%.2f", d[i]) + timeToString((long) time) + "\n");
+            if(i == 0)sb.append( ((int) d[i])+"    "+ timeToString((long) time) + "\n"); else
+            sb.append( ((int) d[i])+"  "+ timeToString((long) time) + "\n");
         }
         return sb.toString();
 
@@ -34,6 +35,7 @@ public class Calck {
 
     private static String[] getArreySec(String text) {
         String number = text.replaceAll("[^0-9\\:]", "");
+        System.out.println(number);
         String[] a = number.split(":");
         return a;
     }
