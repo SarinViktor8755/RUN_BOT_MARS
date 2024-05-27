@@ -26,6 +26,7 @@ public class Save_to_disk_history {
             writer.write(sb.toString());
             writer.close();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -71,6 +72,7 @@ public class Save_to_disk_history {
             writer.append(messs + "\n");
             writer.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -93,6 +95,7 @@ public class Save_to_disk_history {
             writer.write(sb.toString());
             writer.close();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

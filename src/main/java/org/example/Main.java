@@ -140,6 +140,7 @@ public class Main {
 
                         }
                     } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
 
 
@@ -213,6 +214,7 @@ public class Main {
             Save_to_disk_history.save_to_disk_points();
         } catch (ArrayIndexOutOfBoundsException e) {
             //km = 0;
+            e.printStackTrace();
         }
 
     }

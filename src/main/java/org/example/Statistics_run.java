@@ -53,6 +53,7 @@ public class Statistics_run {
             try {
                 br.close();
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }
