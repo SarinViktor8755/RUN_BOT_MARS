@@ -2,7 +2,6 @@ package org.example;
 
 import models.PointForStatistic;
 import org.example.save_to_disk.Save_to_disk_history;
-import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.*;
@@ -69,7 +68,7 @@ public class Statistics_run {
         for (int i = 0; i < t.size(); i++) {
             for (int j = 0; j < t.size(); j++) {
 
-                if (get_name_user(t.get(i)).length() > max_ch) max_ch = get_name_user(t.get(i)).length();
+              //  if (get_name_user(t.get(i)).length() > max_ch) max_ch = get_name_user(t.get(i)).length();
                 if (i == j) continue;
                 o1 = t.get(i);
                 o2 = t.get(j);
@@ -109,10 +108,17 @@ public class Statistics_run {
 
 
     public static String get_name_user(PointForStatistic p) {
-        if (!p.getUsername().equals("null")) return p.getUsername();
-        if (!p.getFirst_name().equals("null")) return p.getFirst_name();
-        if (!p.getLast_name().equals("null")) return p.getLast_name();
-        return "NONO";
+        try {
+            if (!p.getUsername().equals("null")) return p.getUsername();
+            if (!p.getFirst_name().equals("null")) return p.getFirst_name();
+            if (!p.getLast_name().equals("null")) return p.getLast_name();
+            return "NONO";
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Save_to_disk_history.load_to_disk_points_for_statistoc();
+            return get_name_user(p);
+        }
+
     }
 
     public static void get_sum_for_statistic() {

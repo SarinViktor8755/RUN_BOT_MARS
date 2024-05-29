@@ -4,7 +4,7 @@ public class Calck {
 
     public static String main_calck(String text) throws ArrayIndexOutOfBoundsException {
 
-        float[] d = new float[]{5, 10, 15, 21.0975f, 42.195f};
+        float[] d = new float[]{5, 10, 15, 21.0975f, 42.195f,50,100};
         text = text.replaceAll(" ", "");
         String[] a = getArreySec(text);
         float time;
