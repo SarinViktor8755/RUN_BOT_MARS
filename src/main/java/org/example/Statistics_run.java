@@ -109,14 +109,18 @@ public class Statistics_run {
 
     public static String get_name_user(PointForStatistic p) {
         try {
+            if (p.getUsername()==null) return p.getUsername();
+            if (p.getUsername()==null)  return p.getFirst_name();
+            if (p.getUsername()==null)  return p.getLast_name();
+
             if (!p.getUsername().equals("null")) return p.getUsername();
             if (!p.getFirst_name().equals("null")) return p.getFirst_name();
             if (!p.getLast_name().equals("null")) return p.getLast_name();
             return "NONO";
         }catch (NullPointerException e){
             e.printStackTrace();
-            Save_to_disk_history.load_to_disk_points_for_statistoc();
-            return get_name_user(p);
+           // Save_to_disk_history.load_to_disk_points_for_statistoc();
+            return "No name";
         }
 
     }
