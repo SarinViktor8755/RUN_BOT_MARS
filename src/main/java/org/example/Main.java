@@ -68,7 +68,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 //        System.out.println("main_calck");
 //        System.out.println(main_calck("6:00"));
         ////////////////////
@@ -140,7 +140,17 @@ public class Main {
                             delMess(mes,bot);
                             SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()));
                             start_delate_mes(bot, r);
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
 
+                    try {
+                        if (mes.message().text().contains("/events")) {
+                            System.out.println (Events.print_events());
+                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print_events()));
+                            delMess(mes,bot);
+                            //start_delate_mes(bot, r);
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
@@ -321,6 +331,12 @@ public class Main {
         DelateMesPhoto delateMesPhoto = new DelateMesPhoto(bot, ov);
         Timer timer = new Timer();
         timer.schedule(delateMesPhoto, Constants.MINUTE);
+    }
+
+    static private void start_delate_mes(TelegramBot bot, SendResponse ov, int min) { // ?????? ????????? ????? ?????
+        DelateMesPhoto delateMesPhoto = new DelateMesPhoto(bot, ov);
+        Timer timer = new Timer();
+        timer.schedule(delateMesPhoto, Constants.MINUTE * min);
     }
 
     static public void delate_mess(TelegramBot bot, Update mes) {
