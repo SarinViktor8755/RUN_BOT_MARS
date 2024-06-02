@@ -6,6 +6,7 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.DeleteMessage;
+import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
@@ -85,7 +86,7 @@ public class Main {
                     km_temp = km;
                     bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
                     Save_to_disk_history.addMesToFile(mes.toString());
-                    //  bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
+                    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
 
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
@@ -105,7 +106,7 @@ public class Main {
                         Main.km += km_delta;
                         System.out.println(mes);
                         int km_in_mes = parsKmString(new_text);
-                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "??????????::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
+                        bot.execute(new SendMessage(mes.editedMessage().chat().id(), "»справлено ::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
                         History.redact_reuslt_from_statistic(mes, km_in_mes);
                         Save_to_disk_history.save_to_disk_points();
 
@@ -130,7 +131,7 @@ public class Main {
 
 
                     if (PasrserString.distanc_reader(text_mes, user)) {
-                        bot.execute(new SendMessage(chatId, user.username() + " ???????? ???????? " + td + " ?? " + Main.km + " "));
+                        bot.execute(new SendMessage(chatId, user.username() + " »справил значение  " + td + " на " + Main.km + " "));
                         Save_to_disk_history.save_to_disk_points();
                     }
 
@@ -218,7 +219,7 @@ public class Main {
 
     //// ???????? ???????? ????
     static public void give_my_photo(long chatId, TelegramBot bot, int mes_id) {
-        SendResponse ov = bot.execute(new SendMessage(chatId, "???? ?? ?? ?????????, ???????, ?? ????????, ?????? ???? ??? ????? ? ????????\uD83D\uDE09").replyToMessageId(mes_id));
+        SendResponse ov = bot.execute(new SendMessage(chatId, "ƒовер€й но провер€й: приложи фото или скрин трека к своему сообщению \uD83D\uDE09").replyToMessageId(mes_id));
         System.out.println(ov);
         start_delate_mes(bot, ov);
 
