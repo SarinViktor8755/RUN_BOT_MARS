@@ -94,6 +94,7 @@ public class Save_to_disk_history {
             writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(sb.toString());
             writer.close();
+            load_to_disk_points_for_statistoc();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -107,7 +108,6 @@ public class Save_to_disk_history {
 
             String line = br.readLine();
             int i = 0;
-
 
             while (line != null) {
                 PointForStatistic p = new PointForStatistic();

@@ -5,6 +5,7 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
+import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.DeleteMessage;
 import com.pengrad.telegrambot.request.ForwardMessage;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -68,7 +69,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
 //        System.out.println("main_calck");
 //        System.out.println(main_calck("6:00"));
         ////////////////////
@@ -85,7 +86,7 @@ public class Main {
                   //  System.out.println(mes);
                     km_temp = km;
                     bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
-                    Save_to_disk_history.addMesToFile(mes.toString());
+                    //    Save_to_disk_history.addMesToFile(mes.toString());
                     bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
 
                     if (mes.editedMessage() != null) {
@@ -124,6 +125,11 @@ public class Main {
                     boolean isPhoto = false;
 
 
+
+
+
+                    System.out.println("111");
+
                     if (mes.message().caption() != null) {
                         text_mes = mes.message().caption();
                         isPhoto = true;
@@ -135,6 +141,9 @@ public class Main {
                         Save_to_disk_history.save_to_disk_points();
                     }
 
+
+
+
                     try {
                         if (mes.message().text().contains("/st")) {
                             delMess(mes,bot);
@@ -145,24 +154,17 @@ public class Main {
                         e.printStackTrace();
                     }
 
-                    try {
-                        if (mes.message().text().contains("/events")) {
-                            System.out.println (Events.print_events());
-                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print_events()));
-                            delMess(mes,bot);
-                            //start_delate_mes(bot, r);
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
+
+
+
+
+
 
                     try {
                         if (mes.message().text().toLowerCase().contains("/c".toLowerCase())) {
                             delMess(mes,bot);
                             SendResponse r = bot.execute(new SendMessage(chatId, Calck.main_calck(mes.message().text())));
                             start_delate_mes(bot, r);
-
-
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
@@ -170,6 +172,21 @@ public class Main {
                         SendResponse r = bot.execute(new SendMessage(chatId, "неверный формат записи"));
                         start_delate_mes(bot, r);
                     }
+
+                    try {
+                        if (mes.message().text().toLowerCase().contains("/print_events".toLowerCase())) {
+                            delMess(mes,bot);
+                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print()).parseMode(ParseMode.HTML));
+                            start_delate_mes(bot, r);
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        SendResponse r =  bot.execute(new SendMessage(chatId, Events.print()));
+                        start_delate_mes(bot, r);
+                    }
+
+
 
 
                     if (PasrserString.fineKM(text_mes)) {
