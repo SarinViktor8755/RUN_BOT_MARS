@@ -69,7 +69,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 //        System.out.println("main_calck");
 //        System.out.println(main_calck("6:00"));
         ////////////////////
@@ -85,9 +85,9 @@ public class Main {
 
                   //  System.out.println(mes);
                     km_temp = km;
-                    bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
+                  //  bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
                     //    Save_to_disk_history.addMesToFile(mes.toString());
-                    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
+                //    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
 
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
@@ -128,11 +128,12 @@ public class Main {
 
 
 
-                    System.out.println("111");
+                 //   System.out.println("111");
 
                     if (mes.message().caption() != null) {
                         text_mes = mes.message().caption();
                         isPhoto = true;
+
                     } else text_mes = mes.message().text();
 
 
@@ -182,8 +183,9 @@ public class Main {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }catch (ArrayIndexOutOfBoundsException e){
-                        SendResponse r =  bot.execute(new SendMessage(chatId, Events.print()));
-                        start_delate_mes(bot, r);
+                        e.printStackTrace();
+//                        SendResponse r =  bot.execute(new SendMessage(chatId, Events.print()));
+//                        start_delate_mes(bot, r);
                     }
 
 
@@ -246,8 +248,8 @@ public class Main {
 
     //// ???????? ???????? ????
     static public void give_my_photo(long chatId, TelegramBot bot, int mes_id) {
-        SendResponse ov = bot.execute(new SendMessage(chatId, "Доверяй но проверяй: приложи фото или скрин трека к своему сообщению \uD83D\uDE09").replyToMessageId(mes_id));
-        System.out.println(ov);
+        SendResponse ov = bot.execute(new SendMessage(chatId,  "Доверяй но проверяй: приложи фото или скрин трека к своему сообщению \uD83D\uDE09").replyToMessageId(mes_id));
+      //  System.out.println(ov);
         start_delate_mes(bot, ov);
 
     }

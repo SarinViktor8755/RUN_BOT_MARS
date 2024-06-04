@@ -26,28 +26,28 @@ public class MarsSrvice {
     static String create_track_bar(int length_bar) {
         int point = (int) map(0, Distance_Earth_Mars, 0, length_bar, km);
         StringBuilder sb = new StringBuilder();
-        sb.append("Ç|");
+        sb.append("?|");
         for (int i = 0; i < length_bar; i++) {
-            if (point == i) sb.append("*(ÌÛ)>");
+            if (point == i) sb.append("*(??)>");
             if (point < i) sb.append("-");
             if (point > i) sb.append("=");
 
         }
-        sb.append("|Ì");
+        sb.append("|?");
         return sb.toString();
     }
 
     static String create_track_bar(int length_bar, float proc) {
         int point = (int) map(0, Distance_Earth_Mars, 0, length_bar, km);
         StringBuilder sb = new StringBuilder();
-        sb.append("Ç|");
+        sb.append("\uD83D\uDD35|");
         for (int i = 0; i < length_bar; i++) {
             if (point == i) sb.append("" + String.format("%.1f", proc) + "%>");
             if (point < i) sb.append("-");
             if (point > i) sb.append("=");
 
         }
-        sb.append("|Ì");
+        sb.append("|\uD83D\uDD34");
         return sb.toString();
     }
 
