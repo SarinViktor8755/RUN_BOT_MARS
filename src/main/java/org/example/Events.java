@@ -65,9 +65,10 @@ public class Events {
         addevents();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < events.size(); i++) {
-            stringBuilder.append("<blockquote>");
-            stringBuilder.append(event_to_string(events.get(i)) +"\n" );
-            stringBuilder.append("</blockquote>");
+            //stringBuilder.append("<blockquote>");
+            stringBuilder.append(event_to_string(events.get(i)) + "\n" + "\n");
+
+            //  stringBuilder.append("</blockquote>");
         }
         return stringBuilder.toString();
 
@@ -75,23 +76,30 @@ public class Events {
     }
 
     public static String event_to_string(Event event) {
-
+        String uri = null;
         Date date_td = new Date();
         try {
             SimpleDateFormat formatte = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
             Date a = formatte.parse(event.data_event);
             long daysBetween = calculateDaysBetween(date_td, a);
 
+            if(event.getUti()!=null) {
+            uri = "<a href=\"" + event.getUti() + "\">–егистраци€</a>";
+            System.out.println(uri);
+            } else uri = "";
+
             if (daysBetween < 0)
-                return ("<strike>" + formatte.format(a) + " "+event.description + "</strike>");
+                return ("\uD83D\uDD3A" + formatte.format(a) + " " + event.description);
+            else if (daysBetween == 0)
+                return ("<b>\uD83C\uDFC3\uD83C\uDFC3\u200D?\uFE0F (" + daysBetween + " день) " + formatte.format(a) + " " + event.description + "</b>") +  uri;
             else if (daysBetween == 1)
-                return("\uD83D\uDC49 (" + daysBetween + " день) " + formatte.format(a) +" "+ event.description);
+                return ("\uD83D\uDC49 (" + daysBetween + " день) " + formatte.format(a) + " " + event.description) +  uri;
             else if (daysBetween <= 4)
-                return("\uD83D\uDC49 (" + daysBetween + " дн€)" + formatte.format(a) +" "+ event.description);
+                return ("\uD83D\uDC49 (" + daysBetween + " дн€)" + formatte.format(a) + " " + event.description)  +  uri;
             else if (daysBetween <= 30)
-                return("\uD83D\uDC49 (" + daysBetween + " дней)" + formatte.format(a) +" "+ event.description);
+                return ("\uD83D\uDC49 (" + daysBetween + " дней)" + formatte.format(a) + " " + event.description) +  uri;
             else
-                return("(" + daysBetween + " дней)" + formatte.format(a) + event.description);
+                return ("(" + daysBetween + " дней)" + formatte.format(a) + event.description) +  uri;
         } catch (ParseException e) {
             e.printStackTrace();
         }

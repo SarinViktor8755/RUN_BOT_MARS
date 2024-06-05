@@ -69,7 +69,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 //        System.out.println("main_calck");
 //        System.out.println(main_calck("6:00"));
         ////////////////////
