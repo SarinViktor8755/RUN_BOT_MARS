@@ -69,7 +69,7 @@ public class Main {
         start_distanc(args);
 
         System.out.println("Distension : " + Main.km);
-        TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
+        TelegramBot bot = new TelegramBot(BOT_TOKKEN);
 //        System.out.println("main_calck");
 //        System.out.println(main_calck("6:00"));
         ////////////////////
@@ -177,7 +177,7 @@ public class Main {
                     try {
                         if (mes.message().text().toLowerCase().contains("/print_events".toLowerCase())) {
                             delMess(mes,bot);
-                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print()).parseMode(ParseMode.HTML));
+                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print()).parseMode(ParseMode.HTML).disableWebPagePreview(true));
                             start_delate_mes(bot, r);
                         }
                     } catch (NullPointerException e) {

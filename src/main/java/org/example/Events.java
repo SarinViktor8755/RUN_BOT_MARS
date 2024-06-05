@@ -33,15 +33,15 @@ public class Events {
         events.add(new Event("19.05.2024", "Всероссийский полумарафон \"Забег.РФ\" (Омск"));
         events.add(new Event("01.06.2024", "Зеленый марафон 4,2 км / Организатор \"Сбер\", Лукашевича, 35"));
         events.add(new Event("11.06.2024", "\"Самопреодоление\" 3-х и 6 часовые забеги / парк \"Птичья гавань\""));
-        events.add(new Event("16.06.2024", "Цветочный забег (Омск)"));
+        events.add(new Event("16.06.2024", "Цветочный забег (Омск)","https://russiarunning.com/event/FlowerRun/"));
         events.add(new Event("12.07.2024", "IХ  беговой кубок «Подсолнух уДачи» / Омская область, Омский район, п. Дачный / 14, 7, 21 км"));
-        events.add(new Event("13.07.2024", "Гонка на выбывание «Хитрый Лис» / Омская область, Омский район, п. Дачный / 7 км - это дистанция одного круга"));
-        events.add(new Event("03.08.2024", "Сибирский международный марафон (Омск)"));
-        events.add(new Event("10.08.2024", "ЛЕТО.БЕГ / Организатор \"Спорт в сердце\""));
-        events.add(new Event("25.08.2024", "Ultra Trail \"SoloRace\" / Омская область, озеро Эбейты / 14, 25, 70 км бег, 35 и 90 км (bike)"));
+        events.add(new Event("13.07.2024", "Гонка на выбывание «Хитрый Лис» / Омская область, Омский район, п. Дачный / 7 км - это дистанция одного круга","https://docs.google.com/forms/d/e/1FAIpQLScMErJniJ1s100I9PmN9isZ1coAK8uWIIc-lfka4T3GXUJBXQ/viewform "));
+        events.add(new Event("03.08.2024", "Сибирский международный марафон (Омск)","https://russiarunning.com/event/SIM2024/"));
+        events.add(new Event("10.08.2024", "ЛЕТО.БЕГ / Организатор \"Спорт в сердце\"","https://sportvserdce.ru/summerun"));
+        events.add(new Event("25.08.2024", "Ultra Trail \"SoloRace\" / Омская область, озеро Эбейты / 14, 25, 70 км бег, 35 и 90 км (bike)","https://vk.com/al_feed.php?w=wall-152751943_2669"));
         events.add(new Event("07.09.2024", "Гонка героев (Омск)"));
         events.add(new Event("26.10.2024", "\"Три темные мили\" / Организатор \"Спорт в сердце\""));
-        events.add(new Event("03.11.2024", "Кроссовый забег «Ласосень» / Парк Победы, г. Омск / 5 и 10 км"));
+        events.add(new Event("03.11.2024", "Кроссовый забег «Ласосень» / Парк Победы, г. Омск / 5 и 10 км", "https://russiarunning.com/series/SIM2024/events"));
     }
 
 //    public static String print_events() {
@@ -84,7 +84,7 @@ public class Events {
             long daysBetween = calculateDaysBetween(date_td, a);
 
             if(event.getUti()!=null) {
-            uri = "<a href=\"" + event.getUti() + "\">Регистрация</a>";
+            uri = "\n<a href=\"" + event.getUti() + "\">Регистрация</a>";
             System.out.println(uri);
             } else uri = "";
 
