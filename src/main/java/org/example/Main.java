@@ -144,11 +144,10 @@ public class Main {
 
 
 
-
                     try {
                         if (mes.message().text().contains("/st")) {
                             delMess(mes,bot);
-                            SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()));
+                            SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()).disableNotification(true));
                             start_delate_mes(bot, r);
                         }
                     } catch (NullPointerException e) {
@@ -170,14 +169,14 @@ public class Main {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }catch (ArrayIndexOutOfBoundsException e){
-                        SendResponse r = bot.execute(new SendMessage(chatId, "неверный формат записи"));
+                        SendResponse r = bot.execute(new SendMessage(chatId, "неверный формат записи").disableNotification(true));
                         start_delate_mes(bot, r);
                     }
 
                     try {
                         if (mes.message().text().toLowerCase().contains("/print_events".toLowerCase())) {
                             delMess(mes,bot);
-                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print()).parseMode(ParseMode.HTML).disableWebPagePreview(true));
+                            SendResponse r = bot.execute(new SendMessage(chatId, Events.print()).parseMode(ParseMode.HTML).disableWebPagePreview(true).disableNotification(true));
                             start_delate_mes(bot, r);
                         }
                     } catch (NullPointerException e) {
