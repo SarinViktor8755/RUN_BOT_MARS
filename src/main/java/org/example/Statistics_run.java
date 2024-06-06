@@ -20,7 +20,7 @@ public class Statistics_run {
 
     public static void parser_log() { // рабирает строку из логу для статистики
         String jsonString = "{" + read_log_mess() + "}";
-        System.out.println(jsonString);
+     //   System.out.println(jsonString);
         // JSONObject obj = new JSONObject(jsonString);
 
 
@@ -97,7 +97,7 @@ public class Statistics_run {
             sb.append((i + 1) + " " + get_name_user(t.get(i)) + " - " + t.get(i).getDist() + "   _" + ((int) (proc)) + " %\n");
         }
         sb.append("\nСредняя скорость: " + String.format("%.2f", History.getSpeed()) + " км/ч " + "\n" +
-                "Расчетная дата прибытия: " + History.get_ve_to_marsa());
+                "Расчетная дата прибытия: " + History.get_ve_to_marsa() + "\n sum" + sum_dist + " км");
         return sb.toString();
 
     }

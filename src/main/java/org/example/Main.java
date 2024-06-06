@@ -54,8 +54,8 @@ public class Main {
 
         add_admins();
         Save_to_disk_history.load_to_disk_points_for_statistoc();
-        System.out.println(History.history_statistics);
-        System.out.println("!!!!!!!!!!!!!!!");
+      //  System.out.println(History.history_statistics);
+      //  System.out.println("!!!!!!!!!!!!!!!");
         try {
             Save_to_disk_history.read_to_disk_history();
         } catch (IOException e) {
@@ -85,9 +85,9 @@ public class Main {
 
                   //  System.out.println(mes);
                     km_temp = km;
-                  //  bot.execute(new SendMessage("7192520324", mes.toString())); //Send_to_IGOR
+                    bot.execute(new SendMessage("299695014", mes.toString())); //Send_to_IGOR
                     //    Save_to_disk_history.addMesToFile(mes.toString());
-                //    bot.execute(new ForwardMessage("7192520324",mes.message().chat().id(),mes.message().messageId()));
+                    bot.execute(new ForwardMessage("299695014",mes.message().chat().id(),mes.message().messageId()));
 
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
@@ -287,7 +287,7 @@ public class Main {
         int id_my = 299695014;
         //    System.out.println(mes.editedMessage().text()==null);
         // if (mes.editedMessage().caption() != null) return;
-        System.out.println(block_lskala);
+      //  System.out.println(block_lskala);
         if (block_lskala == 0) return;
         if (!mes.message().from().username().equals("lediskala")) return;
 

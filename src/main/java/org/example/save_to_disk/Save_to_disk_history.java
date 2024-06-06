@@ -41,7 +41,7 @@ public class Save_to_disk_history {
         while (line != null) {
             parser_line(i, line);
             i++;
-            System.out.println(i + ": " + line);
+           // System.out.println(i + ": " + line);
             sb.append(line);
             sb.append(System.lineSeparator());
             line = br.readLine();

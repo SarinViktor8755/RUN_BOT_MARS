@@ -9,7 +9,7 @@ public class Calck {
         String[] a = getArreySec(text);
         float time;
         StringBuilder sb = new StringBuilder();
-        sb.append("Темп : " + a[0] + " " + a[1] + "\n");
+        sb.append("пїЅпїЅпїЅпїЅ : " + a[0] + " " + a[1] + "\n");
 
         for (int i = 0; i < d.length; i++) {
             time = sumSec(tempToSec(a[0], a[1]), d[i]);
@@ -38,7 +38,7 @@ public class Calck {
 
     private static String[] getArreySec(String text) {
         String number = text.replaceAll("[^0-9\\:]", "");
-        System.out.println(number);
+       // System.out.println(number);
         String[] a = number.split(":");
         return a;
     }

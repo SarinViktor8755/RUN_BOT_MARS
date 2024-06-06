@@ -24,7 +24,7 @@ public class History { //история суммирования км
 
     static public void startTime() {
 
-        System.out.println("Текущая дата: " + starTimePoint);
+    //    System.out.println("Текущая дата: " + starTimePoint);
     }
 
     static public long startDeltaTime() {
@@ -60,7 +60,7 @@ public class History { //история суммирования км
 
 
     static public void print_history() {
-        System.out.println(history_add.size());
+     //   System.out.println(history_add.size());
         history_add.forEach((key, value) -> System.out.println(key + " " + value));
     }
 
@@ -81,7 +81,7 @@ public class History { //история суммирования км
         PointForStatistic p = new PointForStatistic(mes, km);
         History.history_statistics.add(p);
         Save_to_disk_history.save_to_disk_points_for_statistoc();
-        System.out.println(History.history_statistics);
+      //  System.out.println(History.history_statistics);
 
 
     }
