@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 public class PasrserString {
 
     static public boolean fineKM(String enterS) {
+        enterS = enterS.replaceAll(" ", "");
         return enterS.contains("#κμ");
     }
 

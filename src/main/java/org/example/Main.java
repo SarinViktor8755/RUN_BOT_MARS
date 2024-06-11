@@ -83,11 +83,11 @@ public class Main {
 
                    // if(mes.message().chat().id()!=-1001617066120L) continue;  // ?????????? ??????
 
-                  //  System.out.println(mes);
+                    System.out.println(mes);
                     km_temp = km;
-                    bot.execute(new SendMessage("299695014", mes.toString())); //Send_to_IGOR
-                    //    Save_to_disk_history.addMesToFile(mes.toString());
-                    bot.execute(new ForwardMessage("299695014",mes.message().chat().id(),mes.message().messageId()));
+//                    bot.execute(new SendMessage("299695014", mes.toString())); //Send_to_IGOR
+//                    //    Save_to_disk_history.addMesToFile(mes.toString());
+//                    bot.execute(new ForwardMessage("299695014",mes.message().chat().id(),mes.message().messageId()));
 
                     if (mes.editedMessage() != null) {
                         int m_id = mes.editedMessage().messageId();
@@ -105,7 +105,7 @@ public class Main {
 
                         if (km_delta == 0) break;
                         Main.km += km_delta;
-                        System.out.println(mes);
+                        // System.out.println(mes);
                         int km_in_mes = parsKmString(new_text);
                         bot.execute(new SendMessage(mes.editedMessage().chat().id(), "Исправлено ::\n" + MarsSrvice.calculate_percentage(km, km_in_mes)).replyToMessageId(m_id));
                         History.redact_reuslt_from_statistic(mes, km_in_mes);
@@ -148,6 +148,8 @@ public class Main {
                         if (mes.message().text().contains("/st")) {
                             delMess(mes,bot);
                             SendResponse r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic()).disableNotification(true));
+                            start_delate_mes(bot, r);
+                            r = bot.execute(new SendMessage(chatId, Statistics_run.create_statisstic_week()).disableNotification(true));
                             start_delate_mes(bot, r);
                         }
                     } catch (NullPointerException e) {

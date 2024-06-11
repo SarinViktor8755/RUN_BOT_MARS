@@ -16,7 +16,7 @@ public class MarsSrvice {
             return "Принято " + user_run + " км " + create_emogi(user_run) + "\n" + String.format(Locale.US, "%,d", Main.km_temp)  + "+" +
                     user_run + "=" + String.format(Locale.US, "%,d", km) + " \\ " +
                     String.format(Locale.US, "%,d", (int) ((get_l_to_target()))) + " \n"
-                    + create_track_bar(22, res);
+                    + create_track_bar(19, res);
         else
             return "Финиш!!!\nПробежали " + String.format(Locale.US, "%,d", km) + "  https://www.asn-news.ru/uploads/news/photo/big/scalhobr2.jpeg";
     }

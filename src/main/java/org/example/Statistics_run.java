@@ -102,6 +102,73 @@ public class Statistics_run {
 
     }
 
+
+    private static boolean is_one_week(Long dataPoint, long l){
+        Date d = new Date(dataPoint);
+        Calendar c = new GregorianCalendar();
+        c.setTime(d);
+        d.setTime(l);
+        Calendar c1 = new GregorianCalendar();
+        c1.setTime(d);
+
+        if(c.get(Calendar.WEEK_OF_YEAR)!=c1.get(Calendar.WEEK_OF_YEAR)) return false;
+        if(c.get(Calendar.YEAR)!=c1.get(Calendar.YEAR)) return false;
+
+
+        return true;
+    }
+
+    public static String create_statisstic_week() {
+        StringBuilder sb = new StringBuilder();
+        float proc;
+        int max_ch = 0;
+        ArrayList<PointForStatistic> t = new ArrayList<>();
+        t.clear();
+        for (int i = 0; i < History.history_statistics.size(); i++) {
+            if(is_one_week(History.history_statistics.get(i).getDataPoint(), System.currentTimeMillis())) t.add(History.history_statistics.get(i));
+        }
+
+
+
+        //ArrayList<PointForStatistic> t = (ArrayList<PointForStatistic>) History.history_statistics.clone();
+        PointForStatistic o1, o2;
+        for (int i = 0; i < t.size(); i++) {
+            for (int j = 0; j < t.size(); j++) {
+
+                //  if (get_name_user(t.get(i)).length() > max_ch) max_ch = get_name_user(t.get(i)).length();
+                if (i == j) continue;
+                o1 = t.get(i);
+                o2 = t.get(j);
+                if (o1.equals(o2)) {
+                    o1.setDist(o2.getDist() + o1.getDist());
+                    o2.setDist(0);
+                }
+            }
+        }
+
+        //  History.history_statistics.get(0).
+
+        Collections.sort(t, new Comparator<PointForStatistic>() {
+            @Override
+            public int compare(PointForStatistic o1, PointForStatistic o2) {
+                return o2.getDist() - o1.getDist();
+            }
+        });
+
+
+        get_sum_for_statistic(t);
+        sb.append("Таблица лидеров недели:\n \n ");
+        for (int i = 0; i < t.size(); i++) {
+            if (t.get(i).getDist() == 0) continue;
+            proc = t.get(i).getDist() / Float.valueOf(sum_dist) * 100;
+            sb.append((i + 1) + " " + get_name_user(t.get(i)) + " - " + t.get(i).getDist() + "   _" + ((int) (proc)) + " %\n");
+        }
+//        sb.append("\nСредняя скорость: " + String.format("%.2f", History.getSpeed()) + " км/ч " + "\n" +
+//                "Расчетная дата прибытия: " + History.get_ve_to_marsa() + "\n sum" + sum_dist + " км");
+        return sb.toString();
+
+    }
+
     public static String create_probel(StringBuilder stringBuilder, String name, int max_ch) {
         return "";
     }
@@ -129,6 +196,14 @@ public class Statistics_run {
         Statistics_run.sum_dist = 0;
         for (int i = 0; i < History.history_statistics.size(); i++) {
             Statistics_run.sum_dist += History.history_statistics.get(i).getDist();
+        }
+
+    }
+
+    public static void get_sum_for_statistic(ArrayList<PointForStatistic> s) {
+        Statistics_run.sum_dist = 0;
+        for (int i = 0; i < s.size(); i++) {
+            Statistics_run.sum_dist += s.get(i).getDist();
         }
 
     }

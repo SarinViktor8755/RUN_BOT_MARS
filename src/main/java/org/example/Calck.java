@@ -9,7 +9,7 @@ public class Calck {
         String[] a = getArreySec(text);
         float time;
         StringBuilder sb = new StringBuilder();
-        sb.append("���� : " + a[0] + " " + a[1] + "\n");
+        sb.append("Темп : " + a[0] + " " + a[1] + "\n");
 
         for (int i = 0; i < d.length; i++) {
             time = sumSec(tempToSec(a[0], a[1]), d[i]);
